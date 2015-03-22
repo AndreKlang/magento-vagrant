@@ -67,9 +67,9 @@ execute "curl -sS https://getcomposer.org/installer | php" do
   not_if "test -d /home/vagrant/.composer"
 end
 
-# install n89
-execute "curl https://raw.github.com/netz98/n98-magerun/master/n98-magerun.phar > /usr/local/bin/n98.phar && chmod +x /usr/local/bin/n98.phar" do
-  not_if "test -f /usr/local/bin/n98.phar"
+# install n89-magerun
+execute "wget https://raw.githubusercontent.com/netz98/n98-magerun/master/n98-magerun.phar && sudo mv n98-magerun.phar /usr/local/bin/n98-magerun && sudo chmod +x /usr/local/bin/n98-magerun" do
+  not_if "test -f /usr/local/bin/n98-magerun"
 end
 
 service "apache2" do
