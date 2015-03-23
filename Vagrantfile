@@ -3,8 +3,8 @@
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box = "magento"
-  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+  config.vm.box = "ubuntu/trusty64"
+#  config.vm.box_url = "http://files.vagrantup.com/trusty64.box"
 
   config.vm.network :private_network, ip: "192.168.50.4"
   config.vm.network :forwarded_port, guest: 80, host: 8080
@@ -20,7 +20,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider :virtualbox do |vb|
     # Give the VM 4GB of RAM instead of the default 348MB.
-    vb.customize ["modifyvm", :id, "--memory", "1024"]
+    vb.customize ["modifyvm", :id, "--memory", "2048"]
+    vb.customize ["modifyvm", :id, "--cpus", "2"]
     vb.customize ["modifyvm", :id, "--ioapic", "on"]
 
     # This setting makes it so that network access from inside the vagrant
@@ -37,6 +38,7 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "apache2"
     chef.add_recipe "mysql"
     chef.add_recipe "php"
+    chef.add_recipe "utils"
   end
 
   # config.vm.provision :puppet do |puppet|

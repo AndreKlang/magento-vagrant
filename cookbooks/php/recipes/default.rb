@@ -1,8 +1,7 @@
 php_config_file     = "/etc/php5/apache2/php.ini"
 xdebug_config_file  = "/etc/php5/conf.d/xdebug.ini"
-suhosin_config_file = "/etc/php5/conf.d/suhosin.ini"
 
-%w{php5-cli php5-curl php5-gd php5-mcrypt php-pear php5-mysql php5-suhosin
+%w{php5-cli php5-curl php5-gd php5-mcrypt php-pear php5-mysql
   php5-xdebug libapache2-mod-php5}.each do |php|
   package php
 end
@@ -19,24 +18,21 @@ execute "display-errors" do
   command "sed -i 's/display_errors = Off/display_errors = On/g' #{php_config_file}"
 end
 
-# enable xdebug remote
-execute "xdebug-remote" do
-  not_if "cat #{xdebug_config_file} | grep 'xdebug.remote_enable=On'"
-  command "echo 'xdebug.remote_enable=On' >> #{xdebug_config_file}"
+execute "enable-mcrypt" do
+  command "sudo php5enmod mcrypt"
 end
+
+# enable xdebug remote
+#execute "xdebug-remote" do
+#  not_if "cat #{xdebug_config_file} | grep 'xdebug.remote_enable=On'"
+#  command "echo 'xdebug.remote_enable=On' >> #{xdebug_config_file}"
+#end
 
 # enable xdebug remote connect back
-execute "xdebug-remote-connect-back" do
-  not_if "cat #{xdebug_config_file} | grep 'xdebug.remote_connect_back=On'"
-  command "echo 'xdebug.remote_connect_back=On' >> #{xdebug_config_file}"
-end
-
-# whitelist phar
-execute "whitelist-phar" do
-  not_if "cat #{suhosin_config_file} | grep 'suhosin.executor.include.whitelist=phar'"
-  command "echo 'suhosin.executor.include.whitelist=phar' >> #{suhosin_config_file}"
-end
-
+#execute "xdebug-remote-connect-back" do
+#  not_if "cat #{xdebug_config_file} | grep 'xdebug.remote_connect_back=On'"
+#  command "echo 'xdebug.remote_connect_back=On' >> #{xdebug_config_file}"
+#end
 
 # update pear
 execute "pear-upgrade" do

@@ -1,4 +1,4 @@
-apache_default_config = "/etc/apache2/sites-available/default"
+apache_default_config = "/etc/apache2/sites-available/000-default.conf"
 
 package "apache2" do
   action :install
@@ -25,9 +25,9 @@ execute "/usr/sbin/a2enmod rewrite" do
 end
 
 # allow override for default site
-execute "sed -i '11 s/None/All/' #{apache_default_config}" do
-  not_if "sed -n '11 p' #{apache_default_config} | grep 'AllowOverride All'"
-end
+#execute "sed -i '11 s/None/All/' #{apache_default_config}" do
+#  not_if "sed -n '11 p' #{apache_default_config} | grep 'AllowOverride All'"
+#end
 
 # remove /var/www
 directory "/var/www" do
