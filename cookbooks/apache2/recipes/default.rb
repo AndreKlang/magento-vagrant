@@ -25,9 +25,10 @@ execute "/usr/sbin/a2enmod rewrite" do
 end
 
 # allow override for default site
-#execute "sed -i '11 s/None/All/' #{apache_default_config}" do
-#  not_if "sed -n '11 p' #{apache_default_config} | grep 'AllowOverride All'"
-#end
+execute "set-vhost" do
+  command "rm #{apache_default_config} && cp /vagrant/cookbooks/apache2/recipes/000-default.conf.template #{apache_default_config}"
+end
+
 
 # remove /var/www
 directory "/var/www" do
@@ -37,7 +38,7 @@ directory "/var/www" do
 end
 
 # link to /var/www
-link "/var/www" do
+link "/var/www/html" do
   to "/vagrant/magento"
 end
 
