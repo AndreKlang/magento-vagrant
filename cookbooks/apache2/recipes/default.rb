@@ -37,6 +37,12 @@ directory "/var/www" do
   recursive true
 end
 
+directory "/var/www" do
+  action :create
+  ignore_failure true
+  recursive true
+end
+
 # link to /var/www
 link "/var/www/html" do
   to "/vagrant/magento"
