@@ -29,23 +29,29 @@ execute "set-vhost" do
   command "rm #{apache_default_config} && cp /vagrant/cookbooks/apache2/recipes/000-default.conf.template #{apache_default_config}"
 end
 
-
-# remove /var/www
-directory "/var/www" do
+# remove /var/www/html
+directory "/var/www/html" do
   action :delete
   ignore_failure true
   recursive true
 end
 
-directory "/var/www" do
-  action :create
-  ignore_failure true
-  recursive true
-end
+# remove /var/www
+#directory "/var/www" do
+#  action :delete
+#  ignore_failure true
+#  recursive true
+#end
+
+#directory "/var/www" do
+#  action :create
+#  ignore_failure true
+#  recursive true
+#end
 
 # link to /var/www
-link "/var/www/html" do
-  to "/vagrant/magento"
+link "/var/www/.modman" do
+  to "/vagrant/.modman"
 end
 
 service "apache2" do

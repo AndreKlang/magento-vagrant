@@ -2,7 +2,7 @@ php_config_file     = "/etc/php5/apache2/php.ini"
 xdebug_config_file  = "/etc/php5/conf.d/xdebug.ini"
 
 %w{php5-cli php5-curl php5-gd php5-mcrypt php-pear php5-mysql
-  php5-xdebug libapache2-mod-php5}.each do |php|
+  libapache2-mod-php5}.each do |php|
   package php
 end
 
@@ -46,22 +46,22 @@ execute "pear-autodiscover" do
 end
 
 # install phing
-execute "pear channel-discover pear.phing.info" do
-  not_if "pear list-channels | grep pear.phing.info"
-end
-execute "pear install phing/phing" do
-  not_if "pear list -c phing | grep '^phing '"
-end
+#execute "pear channel-discover pear.phing.info" do
+#  not_if "pear list-channels | grep pear.phing.info"
+#end
+#execute "pear install phing/phing" do
+#  not_if "pear list -c phing | grep '^phing '"
+#end
 
 # install pear git
-execute "pear install VersionControl_Git-alpha" do
-  not_if "pear info VersionControl_Git"
-end
+#execute "pear install VersionControl_Git-alpha" do
+#  not_if "pear info VersionControl_Git"
+#end
 
 # install composer
-execute "curl -sS https://getcomposer.org/installer | php" do
-  not_if "test -d /home/vagrant/.composer"
-end
+#execute "curl -sS https://getcomposer.org/installer | php" do
+#  not_if "test -d /home/vagrant/.composer"
+#end
 
 # install n89-magerun
 execute "wget https://raw.githubusercontent.com/netz98/n98-magerun/master/n98-magerun.phar && sudo mv n98-magerun.phar /usr/local/bin/n98-magerun && sudo chmod +x /usr/local/bin/n98-magerun" do
