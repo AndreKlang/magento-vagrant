@@ -2,7 +2,7 @@
 .idea/
 .vagrant/
 
-vendor/
-magento/
+#vendor/
+#magento/
 .packets/
 packets.sh
